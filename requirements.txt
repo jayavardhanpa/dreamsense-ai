@@ -1,0 +1,17 @@
+numpy
+pandas
+scikit-learn
+torch
+transformers
+matplotlib
+scipy
+jupyter
+pydantic
+fastapi
+uvicorn
+sqlalchemy
+sentence-transformers
+click
+python-dotenv
+pytest
+requests

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dreamsense-ai"
+version = "0.1.0"
+description = "A research-driven project exploring how Artificial Intelligence can interpret and analyze human dreams."
+dependencies = [
+    "numpy",
+    "pandas",
+    "scikit-learn",
+    "torch",
+    "transformers",
+    "matplotlib",
+    "scipy",
+    "jupyter",
+    "pydantic",
+    "fastapi",
+    "uvicorn",
+    "sqlalchemy",
+    "sentence-transformers",
+    "click",
+    "python-dotenv",
+    "pytest",
+    "requests",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
