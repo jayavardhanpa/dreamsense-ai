@@ -3,15 +3,15 @@ NLP pipeline orchestrator.
 """
 
 import logging
-from dreams.services.hf_client import HFClient
+from dreams.services.hf_client_local import LocalHFClient
 from dreams.services.embedding_service import EmbeddingService
 import csv
 
 logger = logging.getLogger(__name__)
 
 class NLPPipeline:
-    def __init__(self):
-        self.hf_client = HFClient()
+    def __init__(self, hf_model="cardiffnlp/twitter-roberta-base-sentiment"):
+        self.hf_client = LocalHFClient(default_sentiment_model=hf_model)
         self.embedding_service = EmbeddingService()
 
     def process_dream(self, dream_text: str):

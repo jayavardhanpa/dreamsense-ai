@@ -17,7 +17,10 @@ class RemoteHFClient:
         """Classify emotion in text via remote API"""
         logger.debug(f"Classifying emotion for text: {text[:50]}...")
         headers = {"Authorization": f"Bearer {self.hf_token}"}
-        response = requests.post(f"{self.base_url}/models/{self.model}", json={"inputs": text}, headers=headers)
+        payload = {"inputs": text}
+        logger.info(f"Network request: POST {self.base_url}/models/{self.model} for emotion classification")
+        response = requests.post(f"{self.base_url}/models/{self.model}", json=payload, headers=headers)
+        logger.info(f"Network response: {response.status_code} for emotion classification")
         result = response.json()
         logger.debug(f"Emotion classification result: {result}")
         return result
@@ -26,7 +29,10 @@ class RemoteHFClient:
         """Get embeddings for texts via remote API"""
         logger.debug(f"Embedding {len(texts)} texts")
         headers = {"Authorization": f"Bearer {self.hf_token}"}
-        response = requests.post(f"{self.base_url}/models/{self.model}", json={"inputs": texts}, headers=headers)
+        payload = {"inputs": texts}
+        logger.info(f"Network request: POST {self.base_url}/models/{self.model} for embedding {len(texts)} texts")
+        response = requests.post(f"{self.base_url}/models/{self.model}", json=payload, headers=headers)
+        logger.info(f"Network response: {response.status_code} for embedding")
         result = response.json()
         logger.debug(f"Embedding result shape: {len(result) if isinstance(result, list) else 'unknown'}")
         return result
