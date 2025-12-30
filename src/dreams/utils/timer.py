@@ -2,8 +2,11 @@
 Timer utility for dreamsense-ai.
 """
 
+import logging
 import time
 from contextlib import contextmanager
+
+logger = logging.getLogger(__name__)
 
 @contextmanager
 def timer():
@@ -13,4 +16,5 @@ def timer():
         yield
     finally:
         end = time.time()
-        print(f"Elapsed time: {end - start:.2f} seconds")
+        elapsed = end - start
+        logger.info(f"Elapsed time: {elapsed:.2f} seconds")

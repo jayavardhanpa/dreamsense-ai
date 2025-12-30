@@ -2,9 +2,12 @@
 NLP pipeline orchestrator.
 """
 
+import logging
 from dreams.services.hf_client import HFClient
 from dreams.services.embedding_service import EmbeddingService
 import csv
+
+logger = logging.getLogger(__name__)
 
 class NLPPipeline:
     def __init__(self):
@@ -13,12 +16,14 @@ class NLPPipeline:
 
     def process_dream(self, dream_text: str):
         """Process dream text through NLP pipeline"""
+        logger.info("Processing dream text through NLP pipeline")
         # Sentiment analysis
         sentiment = self.hf_client.analyze_text(dream_text)
 
         # Embedding
         embedding = self.embedding_service.get_embedding(dream_text)
 
+        logger.info("NLP pipeline processing completed")
         return {
             "sentiment": sentiment,
             "embedding": embedding
@@ -61,6 +66,7 @@ def process(input_file: str, output_file: str, hf_client, cfg):
             ])
 
 def process_csv(input_path: str, output_path: str, hf_client):
+    logger.info(f"Starting CSV processing: {input_path} -> {output_path}")
     results = []
 
     with open(input_path, newline="", encoding="utf-8") as f:
@@ -70,6 +76,7 @@ def process_csv(input_path: str, output_path: str, hf_client):
 
         for row in reader:
             text = row["dream_text"]
+            logger.debug(f"Processing text: {text[:50]}...")
             features = process_text(text, hf_client)
             results.append({
                 "dream_text": text,
@@ -84,3 +91,4 @@ def process_csv(input_path: str, output_path: str, hf_client):
         )
         writer.writeheader()
         writer.writerows(results)
+    logger.info(f"CSV processing completed. Processed {len(results)} rows.")

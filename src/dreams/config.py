@@ -3,8 +3,11 @@ Configuration loader for dreamsense-ai.
 """
 
 import os
+import logging
 from pathlib import Path
 from typing import Dict, Any
+
+logger = logging.getLogger(__name__)
 
 class Config:
     def __init__(self, env: str = "dev"):
@@ -22,10 +25,14 @@ class Config:
                     if line and not line.startswith('#'):
                         key, value = line.split('=', 1)
                         self._config[key.strip()] = value.strip()
+            logger.info(f"Loaded configuration from {config_file}")
+        else:
+            logger.warning(f"Configuration file {config_file} not found")
 
         # Override with environment variables
         for key, value in os.environ.items():
             self._config[key.lower()] = value
+        logger.info("Configuration loaded and overridden with environment variables")
 
     def get(self, key: str, default: Any = None) -> Any:
         return self._config.get(key.lower(), default)

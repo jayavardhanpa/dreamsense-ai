@@ -2,9 +2,12 @@
 Pydantic models for dreamsense-ai.
 """
 
+import logging
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Dict
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 class DreamData(BaseModel):
     text: str
